@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-
+//This is how we create a relative path to the /templates folder. Very happy this is  already written.
 const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
