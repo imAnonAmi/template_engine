@@ -3,7 +3,10 @@ const Employee = require ("./employee");
 class Manager extends Employee {
 
     constructor(name, id, email, officeNumber) {
+
+//REMEMBER that *super* is what retrieves properties from base class, i.e. Employee       
         super(name, id, email);
+//And THEN switching to *this* adds a new property to *this* class, i.e. officeNumber
         this.officeNumber = officeNumber;
     };
 
