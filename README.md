@@ -17,7 +17,7 @@ This application creates a team roster consisting of a Manager, and any number o
 ## Installation
 From your terminal, navigate to the proper folder:
 
-./template_engine/develop
+/template_engine/develop
 
 then run:  node app.js  
 
@@ -26,7 +26,7 @@ User experience is self-guided. Upon launch, you will be prompted to create a Ma
 
 You can view your HTML team roster at:
 
-./template_engine/develop/output/team.html
+/template_engine/develop/output/team.html
 
 ## Known Issues
 None
@@ -40,7 +40,7 @@ imAnonAmi
 ## Tests
 All tests can be found here:
 
-./template_engine/develop/test
+/template_engine/develop/test
 
 ## Questions
 
