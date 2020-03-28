@@ -6,15 +6,13 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 const util = require("util");
-//This is where we make a variable that is the relative path of our output directory. Read up more on path: https://nodejs.org/docs/latest/api/path.html later
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
 const render = require("./lib/htmlRenderer");
-//Maybe need a const for employees to push to render?
 const employees = [];
 const writeFileAsync = util.promisify(fs.writeFile);
-//Choosing team members, first run inside of buildManager which begins the show
+
+//Choosing team members. Even though this is defined first, it actually is only called within other functions (e.g. buildManager, addEngineer, addIntern). The first (and only) globally called function is buildManager which starts the app.
 
 function chooseTeam() {
     return inquirer.prompt([
@@ -42,6 +40,7 @@ function chooseTeam() {
     });
 }
 
+//Defines properties for, and then adds the Manager. This is the first function called within the app!
 function buildManager() {
     console.log("Welcome to Team Template Engine.");
     return inquirer.prompt([
@@ -80,18 +79,17 @@ function buildManager() {
 
     ])
         .then(function (data) {
-            console.log(data);
             const Manager1 = new Manager(data.name, data.id, data.email, data.officeNumber)
             employees.push(Manager1);
 
             const html = render(employees);
+//We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
+            writeFileAsync(outputPath, html);
             chooseTeam();
-
         });
 };
-
+//Defines properties for, and then adds a new Engineer
 function addEngineer() {
-    console.log("Welcome to Team Template Engine.");
     return inquirer.prompt([
         {
             type: "input",
@@ -133,9 +131,7 @@ function addEngineer() {
             employees.push(Engineer1);
 
             const html = render(employees);
-            console.log(employees);
-            console.log(html);
-
+///We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
             writeFileAsync(outputPath, html);
             chooseTeam();
         });
@@ -143,9 +139,8 @@ function addEngineer() {
         
 };
 
-//Add Intern
+//Defines properties for, and then adds a new Intern
 function addIntern() {
-    console.log("Welcome to Team Template Engine.");
     return inquirer.prompt([
         {
             type: "input",
@@ -187,9 +182,7 @@ function addIntern() {
             employees.push(Intern1);
 
             const html = render(employees);
-            console.log(employees);
-            console.log(html);
-
+//We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
             writeFileAsync(outputPath, html);
             chooseTeam();
         });
@@ -202,33 +195,6 @@ function buildTeam(){
     console.log("Your team template has been built!");
     return;
 }
-// After the user has input all answers desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
 
 
 buildManager();
-
-
-
-// Make sure it works, states purpose
-
-
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!```
