@@ -3,7 +3,7 @@
 const Employee = require("./Employee");
 class Manager extends Employee {
 
-    constructor(name, id, email, officeNumber) {
+    constructor(name, id, email, officeNumber, role) {
 
 //REMEMBER that *super* is what retrieves properties from base class, i.e. Employee       
         super(name, id, email);

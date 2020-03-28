@@ -1,3 +1,4 @@
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -10,82 +11,210 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+//Maybe need a const for employees to push to render?
+const employees = [];
 const writeFileAsync = util.promisify(fs.writeFile);
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+//Choosing team members, first run inside of buildManager which begins the show
 
-function buildTeam() {
+function chooseTeam() {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "memberChoice",
+            message: "Which type of team member would you like to add?",
+            choices: [
+                "Engineer",
+                "Intern",
+                "I don't want to add any more team members"
+            ]
+        }
+    ]).then(userChoice => {
+        switch (userChoice.memberChoice) {
+            case "Engineer":
+                addEngineer();
+                break;
+            case "Intern":
+                addIntern();
+                break;
+            default:
+                buildTeam();
+        }
+    });
+}
+
+function buildManager() {
     console.log("Welcome to Team Template Engine.");
     return inquirer.prompt([
-    {
-        type: "input",
-        name: "name",
-        message: "Hello team builder! To begin, what is the name of your Manager?:",
-        default: function() {
-            return "Tom";
+        {
+            type: "input",
+            name: "name",
+            message: "Hello team builder! To begin, what is the name of your Manager?:",
+            default: function () {
+                return "Andrew";
+            }
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Great! What is your Manager's ID?:",
+            default: function () {
+                return "1";
+            }
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your Manager's email address?:",
+            default: function () {
+                return "Andrew@manager.com";
+            }
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "What is your Manager's office number?:",
+            default: function () {
+                return "13";
+            }
         }
-    },
-//REMEMBER: commas not semi-colons
-    {
-        type: "input",
-        name: "id",
-        message: "Great! What is your Manager's ID?:",
-        default: function() {
-            return "2";
+
+    ])
+        .then(function (data) {
+            console.log(data);
+            const Manager1 = new Manager(data.name, data.id, data.email, data.officeNumber)
+            employees.push(Manager1);
+
+            const html = render(employees);
+            chooseTeam();
+
+        });
+};
+
+function addEngineer() {
+    console.log("Welcome to Team Template Engine.");
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Hello team builder! To begin, what is the name of your Engineer?:",
+            default: function () {
+                return "Ken";
+            }
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Great! What is your Engineer's ID?:",
+            default: function () {
+                return "2";
+            }
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your Engineer's email address?:",
+            default: function () {
+                return "Ken@engineer.com";
+            }
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is your Engineer's Github account?:",
+            default: function () {
+                return "NASAGuy57";
+            }
         }
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is your Manager's email address?:",
-        default: function() {
-            return "Tom@tom.com";
+
+    ])
+        .then(function (data) {
+            console.log(data);
+            const Engineer1 = new Engineer(data.name, data.id, data.email, data.github)
+            employees.push(Engineer1);
+
+            const html = render(employees);
+            console.log(employees);
+            console.log(html);
+
+            writeFileAsync(outputPath, html);
+            chooseTeam();
+        });
+               
+        
+};
+
+//Add Intern
+function addIntern() {
+    console.log("Welcome to Team Template Engine.");
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Hello team builder! To begin, what is the name of your Intern?:",
+            default: function () {
+                return "Clarence";
+            }
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Great! What is your Intern's ID?:",
+            default: function () {
+                return "3";
+            }
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your Intern's email address?:",
+            default: function () {
+                return "Clarence@Intern.com";
+            }
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "What is your Intern's school?:",
+            default: function () {
+                return "Nerd Tech";
+            }
         }
-    },
-    {
-        type: "input",
-        name: "officeNumber",
-        message: "What is your Manager's office number?:",
-        default: function() {
-            return "22";
-        }
-    },
-]);
+
+    ])
+        .then(function (data) {
+            console.log(data);
+            const Intern1 = new Intern(data.name, data.id, data.email, data.school)
+            employees.push(Intern1);
+
+            const html = render(employees);
+            console.log(employees);
+            console.log(html);
+
+            writeFileAsync(outputPath, html);
+            chooseTeam();
+        });
+               
+        
+};
+
+//BuildTeam and shut it down
+function buildTeam(){
+    console.log("Your team template has been built!");
+    return;
 }
 // After the user has input all answers desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-function render()
 
- buildTeam() 
-    .then(function(answers) {
-        const html = render(answers);
 
-        return writeFileAsync(outputPath, html);
-    })
-    .then(function() {
-        console.log("Your team template has been built!");
-    })
-    .catch(function(err){
-        console.log(err);
-    });
+buildManager();
+
+
+
 // Make sure it works, states purpose
-     
-//Commenting out below for now and trying to use the method from Mini Project     
-//     try {
-//        const answers = await buildTeam();
-//Pass information into render
-//        render(answers);
-//Use fs to create the HTML roster
-//        await render("team.html", outputPath);
 
-//        console.log("Your team template has been built!")
-//     } catch (err)
-//    {
-//      console.log(err);
-//    }
-// };
- 
+
+
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
