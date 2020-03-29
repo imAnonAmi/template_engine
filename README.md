@@ -25,7 +25,7 @@ This application creates a team roster consisting of a Manager, and any number o
 
 npm i
 
-3. When all npm has finished installing dependencies, type the following command (still in the same folder) to run app:
+3. When npm has finished installing dependencies, type the following command (still in the same folder) to run app:
 
 node app.js  
 
