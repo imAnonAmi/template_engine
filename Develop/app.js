@@ -83,7 +83,7 @@ function buildManager() {
             employees.push(Manager1);
 
             const html = render(employees);
-//We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
+//Use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that outputPath is defined as a constant above.
             writeFileAsync(outputPath, html);
             chooseTeam();
         });
@@ -131,7 +131,7 @@ function addEngineer() {
             employees.push(Engineer1);
 
             const html = render(employees);
-///We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
+//Use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that outputPath is defined as a constant above.
             writeFileAsync(outputPath, html);
             chooseTeam();
         });
@@ -182,7 +182,7 @@ function addIntern() {
             employees.push(Intern1);
 
             const html = render(employees);
-//We use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that we defined outputPath as a constant above.
+//Use writeFileAsync below to update the 'team.html' content with each new Employee created. Note that outputPath is defined as a constant above.
             writeFileAsync(outputPath, html);
             chooseTeam();
         });
