@@ -13,7 +13,7 @@
 
 ## Description
 
-This application creates a team roster consisting of a Manager, and any number of Engineers and Interns. The user is prompted to create a Manager, and then subsequently to pick the members of the team and assign pertinent, individual details. When the user is complete, an HTML roster of all employees and their information is generated.
+This application creates a team roster consisting of a Manager, and any number of Engineers and Interns. The user is prompted to create a Manager, and then subsequently to pick the members of the team and assign pertinent, individual details (default values are provided as examples). When the user is complete, an HTML roster of all employees and their information is generated.
 
 ## Installation
 

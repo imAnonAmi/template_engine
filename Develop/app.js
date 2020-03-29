@@ -126,7 +126,6 @@ function addEngineer() {
 
     ])
         .then(function (data) {
-            console.log(data);
             const Engineer1 = new Engineer(data.name, data.id, data.email, data.github)
             employees.push(Engineer1);
 
@@ -177,7 +176,6 @@ function addIntern() {
 
     ])
         .then(function (data) {
-            console.log(data);
             const Intern1 = new Intern(data.name, data.id, data.email, data.school)
             employees.push(Intern1);
 
